@@ -1,0 +1,109 @@
+//@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;0,800;1,300;1,400;1,600;1,700;1,800&display=swap');
+
+//footer {
+//    border-top: 5px solid theme-color('primary');
+//}
+
+body{
+    //font-family: 'Cabin', sans-serif;
+    font-family: Helvetica Neue;
+}
+
+.btn, a, span{
+    font-family: Helvetica Neue;
+}
+
+h1,h2,h3,h4,h5,h6{
+    //font-family: 'Cabin', serif;
+    font-family: 'Reckless Neue', sans-serif;
+    //font-style: normal;
+    //font-weight: 400;
+    //line-height: 1.2;
+    //overflow-wrap: break-word;
+    //word-wrap: break-word;
+    //letter-spacing: 0;
+}
+
+p {
+    //font-family: 'Cabin', sans-serif;
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: normal;
+}
+
+h1 {
+    font-style: normal;
+    font-weight: bold;
+    font-size: 48px;
+    line-height: 72px
+}
+
+h2 {
+    font-style: normal;
+    font-weight: bold;
+    font-size: 36px;
+    line-height: 54px;
+}
+
+h3 {
+    font-style: normal;
+    font-weight: bold;
+    font-size: 24px;
+    line-height: 36px;
+}
+
+@media (max-width: 767px) {
+    h1 {
+        font-size: 36px;
+        line-height: 45px;
+    }
+    h2 {
+        font-size: 24px;
+        line-height: 36px;
+    }
+    h3 {
+        font-size: 17px;
+        line-height: 36px;
+    }
+}
+
+
+
+.s_testimonial {
+    border: 1px solid #EAEAEA;
+    padding: 20px;
+
+    &.s_testimonial_shadow img {
+        box-shadow: 0 2px 5px rgba(51, 51, 51, 0.4);
+    }
+    &.s_testimonial_grey_bg {
+        border: none;
+        background-color: #EAEAEA;
+    }
+}
+
+//Image Normalizer//
+.scale-down{
+  object-fit: scale-down;
+}
+
+//PRODUCT/SHOP PAGE//
+
+.o_wsale_custom_product_information{
+    position: relative;
+    -webkit-box-flex: 0;
+    -webkit-flex: 0 0 auto;
+    flex: 0 0 auto;
+    transition: .3s ease;
+}
+
+.o_wsale_custom_product_information .product_price *{
+  font-size: 1.1rem;
+  font-weight: bold;
+}
+
+.o_wsale_custom_product_information .product_price oe_currency_value{
+  font-size: 1.5rem;
+}
+
+//PRODUCT/SHOP PAGE//

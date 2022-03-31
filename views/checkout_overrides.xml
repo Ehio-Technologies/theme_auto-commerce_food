@@ -1,0 +1,296 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <template id="custom_checkout" inherit_id="website_sale.checkout" name="Checkout">
+        <xpath expr="//div[hasclass('oe_cart')]" position="replace">
+            <h1 class="title mb-4">Checkout</h1>
+            <div class="col-12 col-xl order-xl-1 oe_cart">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h4 class="o_page_header mt8">Billing Address</h4>
+                    </div>
+                    <div class="col-lg-6 one_kanban">
+                        <t t-call="website_sale.address_kanban">
+                            <t t-set='contact' t-value="order.partner_id"/>
+                            <t t-set='selected' t-value="1"/>
+                            <t t-set='readonly' t-value="1"/>
+                        </t>
+                    </div>
+                </div>
+                <t t-if="not only_services" groups="sale.group_delivery_invoice_address">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <h4 class="o_page_header mt16 mb4">Shipping Address</h4>
+                        </div>
+                    </div>
+                    <div class="row all_shipping">
+                        <div class="col-lg-12">
+                            <div class="row mt8">
+                                <div class="col-md-12 col-lg-12 one_kanban">
+                                    <form action="/shop/address" method="post" class=''>
+                                        <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()" />
+                                        <a role="button" href="#" class='a-submit btn btn-secondary mb16 btn-block'>
+                                            <i class="bi-plus-square"/>
+                                            <span>Add an address</span>
+                                        </a>
+                                    </form>
+                                </div>
+                                <t t-foreach="shippings" t-as="ship">
+                                    <div class="col-md-12 col-lg-6 one_kanban">
+                                        <t t-call="website_sale.address_kanban">
+                                            <t t-set="actual_partner" t-value="order.partner_id" />
+                                            <t t-set='contact' t-value="ship"/>
+                                            <t t-set='selected' t-value="order.partner_shipping_id==ship"/>
+                                            <t t-set='readonly' t-value="bool(len(shippings)==1)"/>
+                                            <t t-set='edit_billing' t-value="bool(ship==order.partner_id)"/>
+                                        </t>
+                                    </div>
+                                </t>
+                            </div>
+                        </div>
+                    </div>
+                </t>
+                <div class="d-flex justify-content-between mt-3">
+                    <a role="button" href="/shop/cart" class="btn btn-outline-secondary mb32">
+                        <i class="bi-chevron-left"/>
+                        <span>Return to Cart</span>
+                    </a>
+                    <a role="button" href="/shop/confirm_order" class="btn btn-primary mb32">
+                        <span>Confirm</span>
+                        <i class="bi-chevron-right"/>
+                    </a>
+                </div>
+            </div>
+
+        </xpath>
+
+    </template>
+
+<!--    <template id="custom_address_left_chevron" inherit_id="website_sale.address" name="Address Management Left Chevron">-->
+<!--        <xpath expr="//a/i[hasclass('fa-chevron-left')]" position="replace">-->
+<!--            <i class="bi-chevron-left"></i>-->
+<!--        </xpath>-->
+<!--    </template>-->
+
+<!--    <template id="custom_address_right_chevron" inherit_id="website_sale.address" name="Address Management Right Chevron">-->
+<!--        <xpath expr="//a/i[hasclass('fa-chevron-right')]" position="replace">-->
+<!--            <i class="bi-chevron-right"></i>-->
+<!--        </xpath>-->
+<!--    </template>-->
+
+    <template id="custom_address" inherit_id="website_sale.address" name="Address Management">
+        <xpath expr="//div[hasclass('oe_cart')]" position="replace">
+            <div class="col-12 col-xl order-xl-1 oe_cart">
+                <div>
+                    <t t-if="mode == ('new', 'billing')">
+                        <h4 class="o_page_header mt8">Your Address
+                            <small> or </small>
+                            <a role="button" href='/web/login?redirect=/shop/checkout' class='btn btn-primary' style="margin-top: -11px">Log In</a>
+                        </h4>
+                    </t>
+                    <t t-if="mode == ('edit', 'billing')">
+                        <h4 class="o_page_header mt8">Your Address</h4>
+                    </t>
+                    <t t-if="mode[1] == 'shipping'">
+                        <h4 class="o_page_header mt8">Shipping Address </h4>
+                    </t>
+                    <t t-if="partner_id == website_sale_order.partner_shipping_id.id == website_sale_order.partner_invoice_id.id">
+                        <div class="alert alert-warning" role="alert" t-if="not only_services">
+                            <h4 class="alert-heading">Be aware!</h4>
+                            <p  groups="sale.group_delivery_invoice_address">
+                                You are editing your <b>billing and shipping</b> addresses at the same time!<br/>
+                                If you want to modify your shipping address, create a <a href='/shop/address'>new address</a>.
+                            </p>
+                        </div>
+                    </t>
+                    <t t-if="error" t-foreach="error.get('error_message', [])" t-as="err">
+                        <h5 class="text-danger" t-esc="err" />
+                    </t>
+                    <form action="/shop/address" method="post" class="checkout_autoformat">
+                        <div class="form-row">
+                            <div t-attf-class="form-group #{error.get('name') and 'o_has_error' or ''} col-lg-12 div_name">
+                                <label class="col-form-label" for="name">Name</label>
+                                <input type="text" name="name" t-attf-class="form-control #{error.get('name') and 'is-invalid' or ''}" t-att-value="'name' in checkout and checkout['name']" />
+                            </div>
+                            <div class="w-100"/>
+                            <t t-if="mode[1] == 'billing'">
+                                <div t-attf-class="form-group #{error.get('email') and 'o_has_error' or ''} col-lg-6" id="div_email">
+                                    <label class="col-form-label" for="email">Email</label>
+                                    <input type="email" name="email" t-attf-class="form-control #{error.get('email') and 'is-invalid' or ''}" t-att-value="'email' in checkout and checkout['email']" />
+                                </div>
+                            </t>
+                            <div t-attf-class="form-group #{error.get('phone') and 'o_has_error' or ''} col-lg-6" id="div_phone">
+                                <label class="col-form-label" for="phone">Phone</label>
+                                <input type="tel" name="phone" t-attf-class="form-control #{error.get('phone') and 'is-invalid' or ''}" t-att-value="'phone' in checkout and checkout['phone']" />
+                            </div>
+                            <div class="w-100"/>
+                            <div t-attf-class="form-group #{error.get('street') and 'o_has_error' or ''} col-lg-12 div_street">
+                                <label class="col-form-label" for="street">Street <span class="d-none d-md-inline"> and Number</span></label>
+                                <input type="text" name="street" t-attf-class="form-control #{error.get('street') and 'is-invalid' or ''}" t-att-value="'street' in checkout and checkout['street']" />
+                            </div>
+                            <div t-attf-class="form-group #{error.get('street2') and 'o_has_error' or ''} col-lg-12 div_street2">
+                                <label class="col-form-label label-optional" for="street2">Street 2</label>
+                                <input type="text" name="street2" t-attf-class="form-control #{error.get('street2') and 'is-invalid' or ''}" t-att-value="'street2' in checkout and checkout['street2']" />
+                            </div>
+                            <div class="w-100"/>
+                            <t t-set='zip_city' t-value='country and [x for x in country.get_address_fields() if x in ["zip", "city"]] or ["city", "zip"]'/>
+                            <t t-if="'zip' in zip_city and zip_city.index('zip') &lt; zip_city.index('city')">
+                                <div t-attf-class="form-group #{error.get('zip') and 'o_has_error' or ''} col-md-4 div_zip">
+                                    <label class="col-form-label label-optional" for="zip">Zip Code</label>
+                                    <input type="text" name="zip" t-attf-class="form-control #{error.get('zip') and 'is-invalid' or ''}" t-att-value="'zip' in checkout and checkout['zip']" />
+                                </div>
+                            </t>
+                            <div t-attf-class="form-group #{error.get('city') and 'o_has_error' or ''} col-md-8 div_city">
+                                <label class="col-form-label" for="city">City</label>
+                                <input type="text" name="city" t-attf-class="form-control #{error.get('city') and 'is-invalid' or ''}" t-att-value="'city' in checkout and checkout['city']" />
+                            </div>
+                            <t t-if="'zip' in zip_city and zip_city.index('zip') &gt; zip_city.index('city')">
+                                <div t-attf-class="form-group #{error.get('zip') and 'o_has_error' or ''} col-md-4 div_zip">
+                                    <label class="col-form-label label-optional" for="zip">Zip Code</label>
+                                    <input type="text" name="zip" t-attf-class="form-control #{error.get('zip') and 'is-invalid' or ''}" t-att-value="'zip' in checkout and checkout['zip']" />
+                                </div>
+                            </t>
+                            <div class="w-100"/>
+                            <div t-attf-class="form-group #{error.get('country_id') and 'o_has_error' or ''} col-lg-6 div_country">
+                                <label class="col-form-label" for="country_id">Country</label>
+                                <select id="country_id" name="country_id" t-attf-class="form-control #{error.get('country_id') and 'is-invalid' or ''}" t-att-mode="mode[1]">
+                                    <option value="">Country...</option>
+                                    <t t-foreach="countries" t-as="c">
+                                        <option t-att-value="c.id" t-att-selected="c.id == (country and country.id or -1)">
+                                            <t t-esc="c.name" />
+                                        </option>
+                                    </t>
+                                </select>
+                            </div>
+                            <div t-attf-class="form-group #{error.get('state_id') and 'o_has_error' or ''} col-lg-6 div_state" t-att-style="(not country or not country.state_ids) and 'display: none'">
+                                <label class="col-form-label" for="state_id">State / Province</label>
+                                <select name="state_id" t-attf-class="form-control #{error.get('state_id') and 'is-invalid' or ''}" data-init="1">
+                                    <option value="">State / Province...</option>
+                                    <t t-foreach="country_states" t-as="s">
+                                        <option t-att-value="s.id" t-att-selected="s.id == ('state_id' in checkout and country and checkout['state_id'] != '' and int(checkout['state_id']))">
+                                            <t t-esc="s.name" />
+                                        </option>
+                                    </t>
+                                </select>
+                            </div>
+                            <div class="w-100"/>
+                            <t t-if="mode == ('new', 'billing') and not only_services">
+                                <div class="col-lg-12">
+                                    <div class="checkbox">
+                                      <label>
+                                        <input type="checkbox" id='shipping_use_same' class="mr8" name='use_same' value="1" checked='checked'/>Ship to the same address
+                                        <span class='ship_to_other text-muted' style="display: none">&amp;nbsp;(<i>Your shipping address will be requested later) </i></span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </t>
+                        </div>
+
+                        <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()" />
+                        <input type="hidden" name="submitted" value="1" />
+                        <input type="hidden" name="partner_id" t-att-value="partner_id or '0'" />
+                        <input type="hidden" name="callback" t-att-value="callback" />
+                        <!-- Example -->
+                        <input type="hidden" name="field_required" t-att-value="'phone,name'" />
+
+                        <div class="d-flex justify-content-between">
+                            <a role="button" t-att-href="mode == ('new', 'billing') and '/shop/cart' or '/shop/checkout'" class="btn btn-secondary mb32">
+                                <i class="bi-chevron-left"/>
+                                <span>Back</span>
+                            </a>
+                            <a role="button" href="#" class="btn btn-primary mb32 a-submit a-submit-disable a-submit-loading">
+                                <span>Next</span>
+                                <i class="bi-chevron-right"/>
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </xpath>
+    </template>
+
+
+    <template id="custom_payment" inherit_id="website_sale.payment" name="Payment">
+        <xpath expr="//div[hasclass('oe_website_sale')]" position="replace">
+            <div class="container oe_website_sale py-2 mb-4">
+
+                    <div class="row">
+                        <div class='col-12'>
+                            <t t-call="website_sale.wizard_checkout">
+                                <t t-set="step" t-value="40" />
+                            </t>
+                        </div>
+                        <div class="col-12" t-if="errors">
+                            <t t-foreach="errors" t-as="error">
+                                <div class="alert alert-danger" t-if="error" role="alert">
+                                    <h4>
+                                        <t t-esc="error[0]" />
+                                    </h4>
+                                    <t t-esc="error[1]" />
+                                </div>
+                            </t>
+                        </div>
+
+                        <h1 class="title mb-4 col-12">Checkout</h1>
+
+                        <div class="col-12 col-xl-auto order-xl-2">
+                            <h4 class="mb-3">Cart Summary</h4>
+                            <t t-call="website_sale.cart_summary"/>
+                        </div>
+
+                        <div class="col-12 col-xl order-xl-1 oe_cart">
+
+                            <div class="card">
+                                <div class="card-body" id="shipping_and_billing">
+                                    <a class='float-right no-decoration' href='/shop/checkout'><i class="fa fa-edit"/> Edit</a>
+                                    <t t-set="same_shipping" t-value="bool(order.partner_shipping_id==order.partner_id or only_services)" />
+                                    <div><b>Billing<t t-if="same_shipping and not only_services"> &amp; Shipping</t>: </b><span t-esc='order.partner_id' t-options="dict(widget='contact', fields=['address'], no_marker=True, separator=', ')" class="address-inline"/></div>
+                                    <div t-if="not same_shipping and not only_services" groups="sale.group_delivery_invoice_address"><b>Shipping: </b><span t-esc='order.partner_shipping_id' t-options="dict(widget='contact', fields=['address'], no_marker=True, separator=', ')"  class="address-inline"/></div>
+                                </div>
+                            </div>
+
+                            <div class="oe_structure clearfix mt-3" id="oe_structure_website_sale_payment_1"/>
+
+                            <div id="payment_method" class="mt-3" t-if="(acquirers or tokens) and website_sale_order.amount_total">
+                                <h3 class="mb24">Pay with </h3>
+                                <t t-call="payment.payment_tokens_list">
+                                    <t t-set="mode" t-value="'payment'"/>
+                                    <t t-set="submit_txt">Pay Now</t>
+                                    <t t-set="icon_right" t-value="1"/>
+                                    <t t-set="icon_class" t-value="'bi-chevron-right'"/>
+                                    <t t-set="submit_class" t-value="'btn btn-primary'"/>
+                                    <t t-set="pms" t-value="tokens"/>
+                                    <t t-set="form_action" t-value="'/shop/payment/token'"/>
+                                    <t t-set="prepare_tx_url" t-value="'/shop/payment/transaction/'"/>
+                                    <t t-set="partner_id" t-value="partner"/>
+
+                                    <t t-set="back_button_icon_class" t-value="'bi-chevron-left'"/>
+                                    <t t-set="back_button_txt">Return to Cart</t>
+                                    <t t-set="back_button_class" t-value="'btn btn-outline-secondary'"/>
+                                    <t t-set="back_button_link" t-value="'/shop/cart'"/>
+                                </t>
+                            </div>
+
+                            <div t-if="not acquirers" class="mt-2">
+                                <a role="button" class="btn-link"
+                                    groups="base.group_system"
+                                    t-attf-href="/web#action=#{payment_action_id}">
+                                        <i class="bi-arrow-right"></i> Add payment acquirers
+                                </a>
+                            </div>
+                            <div class="js_payment mt-3" t-if="not website_sale_order.amount_total" id="payment_method">
+                                <form target="_self" action="/shop/payment/validate" method="post" class="float-right">
+                                    <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()" />
+                                    <a role="button" class="btn btn-primary a-submit" href="#">
+                                        <span t-if="order.amount_total &gt; 0">Pay Now <i class="bi-chevron-right"></i></span>
+                                        <span t-if="order.amount_total == 0">Confirm Order <i class="bi-chevron-right"></i></span>
+                                    </a>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        </xpath>
+    </template>
+
+
+</odoo>

@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <template id="custom_products_item" inherit_id="website_sale.products_item" name="Custom Product">
+        <xpath expr="//form[hasclass('card')]" position="replace">
+            <form action="/shop/cart/update" method="post" class="card oe_product_cart"
+            t-att-data-publish="product.website_published and 'on' or 'off'"
+            itemscope="itemscope" itemtype="http://schema.org/Product">
+
+            <div class="card-body p-1 oe_product_image">
+                <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()" />
+                <a t-att-href="product_href" class="d-block h-100" itemprop="url">
+                    <t t-set="image_holder" t-value="product._get_image_holder()"/>
+                    <span t-field="image_holder.image_1920"
+                        t-options="{'widget': 'image', 'preview_image': 'image_1024' if product_image_big else 'image_256'}"
+                        class="d-flex h-100 justify-content-center align-items-center"/>
+                </a>
+            </div>
+
+            <div class="card-body p-0 text-center o_wsale_custom_product_information">
+                <div class="p-2 o_wsale_product_information_text">
+                    <p class="o_wsale_products_item_title">
+                        <a itemprop="name" t-att-href="product_href" t-att-content="product.name" t-field="product.name" />
+                        <a role="button" t-if="not product.website_published" t-att-href="product_href" class="btn btn-sm btn-danger" title="This product is unpublished.">Unpublished</a>
+                    </p>
+                    <h6 class="product_price fw-bold" itemprop="offers" itemscope="itemscope" itemtype="http://schema.org/Offer">
+                        <del t-attf-class="text-danger mr-2 {{'' if combination_info['has_discounted_price'] else 'd-none'}}" style="white-space: nowrap;" t-esc="combination_info['list_price']" t-options="{'widget': 'monetary', 'display_currency': website.currency_id}" />
+                        <span t-if="combination_info['price']" t-esc="combination_info['price']" t-options="{'widget': 'monetary', 'display_currency': website.currency_id}"/>
+                        <span itemprop="price" style="display:none;" t-esc="combination_info['price']" />
+                        <span itemprop="priceCurrency" style="display:none;" t-esc="website.currency_id.name" />
+                    </h6>
+                </div>
+                <div class="o_wsale_product_btn"/>
+            </div>
+
+            <t t-set="bg_color" t-value="td_product['ribbon']['bg_color'] or ''"/>
+            <t t-set="text_color" t-value="td_product['ribbon']['text_color']"/>
+            <t t-set="bg_class" t-value="td_product['ribbon']['html_class']"/>
+            <span t-attf-class="o_ribbon #{bg_class}" t-attf-style="#{text_color and ('color: %s; ' % text_color)}#{bg_color and 'background-color:' + bg_color}" t-raw="td_product['ribbon']['html'] or ''"/>
+        </form>
+        </xpath>
+    </template>
+
+
+    <!--Icon Overrides-->
+    <template id="custom_header_cart_link" inherit_id="website_sale.header_cart_link" name="Custom Header Cart Link">
+        <xpath expr="//li/a/i[hasclass('fa-shopping-cart')]" position="replace">
+            <i class="bi-cart"></i>
+        </xpath>
+    </template>
+
+    <template id="products_add_to_cart" inherit_id="website_sale.products_item" active="False" customize_show="True" name="Add to Cart">
+        <xpath expr="//div[hasclass('o_wsale_product_btn')]" position="inside">
+            <t t-set="product_variant_id" t-value="product._get_first_possible_variant_id()"/>
+            <input name="product_id" t-att-value="product_variant_id" type="hidden"/>
+            <t t-if="product_variant_id">
+                <a href="#" role="button" class="btn btn-secondary a-submit" aria-label="Shopping cart" title="Shopping cart">
+                    <span class="fa fa-shopping-cart"/>
+                </a>
+            </t>
+        </xpath>
+    </template>
+
+    <template id="custom_products_add_to_cart_link" inherit_id="website_sale.products_add_to_cart" name="Custom Product Icon I">
+        <xpath expr="//a/span[hasclass('fa-shopping-cart')]" position="replace">
+            <i class="bi-cart"></i>
+        </xpath>
+    </template>
+
+
+    <!--Icon Overrides-->
+
+    <!-- CART PAGE-->
+
+
+
+
+
+
+    <!--    CART PAGE-->
+<!--    <template id="brand_promotion" inherit_id="web.brand_promotion" name="Brand Promotion">-->
+<!--        <xpath expr="//t[@t-call='web.brand_promotion_message']" position="replace">-->
+<!--            <div></div>-->
+<!--        </xpath>-->
+<!--    </template>-->
+
+    <template id="footer_no_copyright" inherit_id="website.layout" name="Footer No Copyright" active="True">
+        <xpath expr="//div[hasclass('o_footer_copyright')]" position="before">
+            <t t-set="no_copyright" t-value="True"/>
+        </xpath>
+    </template>
+
+
+    <template id="custom+footer_custom" inherit_id="website.layout" name="Default" active="True">
+        <xpath expr="//div[@id='footer']" position="replace">
+            <div id="footer" class="oe_structure oe_structure_solo" t-ignore="true" t-if="not no_footer">
+                <section class="s_text_block pt40 pb16" data-snippet="s_text_block" data-name="Text">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-lg-2 pt24 pb24">
+                                <h5 class="mb-3">Useful Links</h5>
+                                <ul class="list-unstyled">
+                                    <li><a href="/">Home</a></li>
+                                    <li><a href="#">About us</a></li>
+                                    <li><a href="/shop">Products</a></li>
+                                    <li><a href="/contactus">Contact us</a></li>
+                                </ul>
+                            </div>
+                            <div class="col-lg-5 pt24 pb24">
+                                <h5 class="mb-3">About us</h5>
+                                <p>We are a team of passionate people whose goal is to improve everyone's life through disruptive products. We build great products to solve your business problems.
+                                <br/><br/>Our products are designed for small to medium size companies willing to optimize their performance.</p>
+                            </div>
+                            <div id="connect" class="col-lg-4 offset-lg-1 pt24 pb24">
+                                <h5 class="mb-3">Connect with us</h5>
+                                <ul class="list-unstyled custom-business-info">
+                                    <li><i class="fa fa-comment fa-fw mr-2"/><span><a href="/contactus">Contact us</a></span></li>
+                                    <li><i class="fa fa-envelope fa-fw mr-2"/><span><a href="mailto:info@yourcompany.example.com">info@yourcompany.example.com</a></span></li>
+                                    <li><i class="fa fa-phone fa-fw mr-2"/><span class="o_force_ltr"><a href="tel:+1 (650) 691-3277">+1 (650) 691-3277</a></span></li>
+                                </ul>
+                                <div class="s_share text-left" data-name="Social Media">
+                                    <h5 class="s_share_title d-none">Follow us</h5>
+                                    <a href="/website/social/facebook" class="s_share_facebook" target="_blank">
+                                        <i class="fa fa-facebook rounded-circle shadow-sm"/>
+                                    </a>
+                                    <a href="/website/social/twitter" class="s_share_twitter" target="_blank">
+                                        <i class="fa fa-twitter rounded-circle shadow-sm"/>
+                                    </a>
+                                    <a href="/website/social/linkedin" class="s_share_linkedin" target="_blank">
+                                        <i class="fa fa-linkedin rounded-circle shadow-sm"/>
+                                    </a>
+                                    <a href="/" class="text-800 float-right">
+                                        <i class="fa fa-home rounded-circle shadow-sm"/>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </xpath>
+    </template>
+
+
+</odoo>

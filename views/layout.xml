@@ -1,0 +1,17 @@
+<odoo>
+
+
+<!--    Homepage Layout Initializer-->
+    <template id="theme_auto-commerce_food.new_homepage" inherit_id="website.homepage">
+        <xpath expr="//div[@id='wrap']" position="inside">
+            <t t-call="theme_auto-commerce_food.banner_slider"></t>
+            <div class="oe_structure" />
+            <t t-call="theme_auto-commerce_food.popular_products_section"></t>
+            <div class="oe_structure" />
+            <t t-call="theme_auto-commerce_food.product_highlight_section"></t>
+            <div class="oe_structure" />
+            <t t-call="theme_auto-commerce_food.category_banner_section"></t>
+            <div class="oe_structure" />
+        </xpath>
+    </template>
+</odoo>

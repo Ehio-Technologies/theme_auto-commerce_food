@@ -1,0 +1,284 @@
+<odoo>
+
+    <template id="theme_snippets" inherit_id="website.snippets">
+            <xpath expr="//div[@id='snippet_structure']" position="before">
+                <!--====== All Sliders Style ====== -->
+                <div class="o_panel_header">
+                    Theme Snippets
+                </div>
+                <div class="o_panel_body">
+                    <t t-snippet="theme_auto-commerce_food.s_testimonial" t-thumbnail="/theme_auto-commerce_food/static/src/img/ui/snippet_thumb.jpg"/>
+                    <t t-snippet="theme_auto-commerce_food.banner_slider" t-thumbnail="/theme_auto-commerce_food/static/src/img/ui/banner_slider_1.jpg"/>
+                    <t t-snippet="theme_auto-commerce_food.category_section" t-thumbnail="/theme_auto-commerce_food/static/src/img/ui/category_slider.jpg"/>
+                    <t t-snippet="theme_auto-commerce_food.popular_products_section" t-thumbnail="/theme_auto-commerce_food/static/src/img/ui/popular_products.jpg"/>
+                    <t t-snippet="theme_auto-commerce_food.product_highlight_section" t-thumbnail="/theme_auto-commerce_food/static/src/img/ui/highlight.jpg"/>
+                </div>
+            </xpath>
+        </template>
+
+    <template id="s_testimonial" name="Testimonial snippet">
+        <section class="s_testimonial">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-4 text-center">
+                        <img alt="client" class="rounded-circle" src="/theme_auto-commerce_food/static/src/img/person.png"/>
+                        <h3>Client Name</h3>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                    </div>
+                    <div class="col-lg-4 text-center">
+                        <img alt="client" class="rounded-circle" src="/theme_auto-commerce_food/static/src/img/person.png"/>
+                        <h3>Client Name</h3>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                    </div>
+                    <div class="col-lg-4 text-center">
+                        <img alt="client" class="rounded-circle" src="/theme_auto-commerce_food/static/src/img/person.png"/>
+                        <h3>Client Name</h3>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </template>
+
+
+    <template id="banner_slider" name="Banner Slider">
+        <!-- carousel banner -->
+        <section class="s_carousel_wrapper" data-vxml="001">
+            <div id="myCarousel" class="s_carousel s_carousel_default carousel slide" data-interval="10000">
+
+                <ol class="carousel-indicators visually-hidden">
+                    <li data-target="#myCarousel" data-slide-to="0" class="active"/>
+                </ol>
+
+                <!-- Content-->
+                <div class="carousel-inner">
+
+                    <div class="carousel-item active banner-bg oe_img_bg pt152 pb152" data-name="Slide" style="background-image: url('/theme_auto-commerce_food/static/src/img/bg/bg-3.jpg');">
+                        <div class="banner-section position-relative d-flex align-items-center" >
+    <!--                        <img class="banner-bg" src="/theme_auto-commerce_food/static/src/img/bg/bg-3.jpg"/>-->
+
+                            <div class="container position-relative bring-to-front">
+                                <div class="row  align-items-center">
+                                    <div class="col-md-12 col-lg-8">
+                                        <div class="banner-content  text-lg-left">
+                                            <!-- Heading -->
+                                            <h1 class="display-4 mb-4">
+                                                Shop premium products today
+                                            </h1>
+
+                                            <!-- Subheading -->
+<!--                                            <p class="lead mb-5 text-white">-->
+<!--                                                Buy from our one-stop-shop where we provide high quality products and services-->
+<!--                                            </p>-->
+                                            <p class="lead mb-5">
+                                                Discover the high quality items we offer
+                                            </p>
+
+                                            <!-- Button -->
+                                            <p class="mb-0">
+                                                <a href="/shop" target="_blank" class="btn  btn-outline-primary btn-lg">
+                                                    Shop our collection
+                                                </a>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- / .row -->
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </section>
+    </template>
+
+    <template id="category_section" name="Categories Section">
+        <!-- categories -->
+        <section id="categories" contenteditable="False"  class="d-flex align-items-center bg-white py-4">
+
+            <div class="container position-relative d-flex flex-column py-lg-1">
+                <h3>
+                    Categories
+                </h3>
+
+                <h6 class="mt-2 text-center d-none js-no-category">
+                   No categories available
+                </h6>
+
+
+
+                <ul id="categorySlider" class="mt-2">
+
+<!--                    <li class="position-relative mx-2">-->
+<!--                        <div class="category-item d-flex flex-column justify-content-center">-->
+<!--                            <a class="cover">-->
+<!--                                <img class="category-img" src="/theme_auto-commerce_food/static/src/img/bg/category.jpg" />-->
+<!--                            </a>-->
+<!--                            <div class="d-flex justify-content-center mt-1">-->
+<!--                                <a class="text-center lh-sm category-name">-->
+<!--                                    Category 1-->
+<!--                                </a>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </li>-->
+
+                </ul>
+            </div>
+        </section>
+    </template>
+
+    <template id="popular_products_section" name="Popular Products">
+        <!-- products -->
+        <section id="popularProducts" contenteditable="False" class="d-flex flex-column grey-bg align-items-center py-5">
+
+            <div class="container position-relative d-flex flex-column">
+                <h2 class="text-center mb-4 title">
+                    Popular products
+                </h2>
+
+                <h6 class="text-center sub-text">
+                    A collection of our products trusted and loved by our customers we are sure you will also love
+                </h6>
+
+                <h6 class="mt-2 text-center d-none js-no-product">
+                   No products available
+                </h6>
+
+                <div class="spinner js-product-spinner">
+                  <div class="bounce1"></div>
+                  <div class="bounce2"></div>
+                  <div class="bounce3"></div>
+                </div>
+
+                <div class="product-container row my-4" id="popularProductsContainer">
+
+<!--                    <div class="product-item col-md-4 col-lg-4 d-flex align-items-stretch mb-lg-2">-->
+<!--                        <div class="product-card card m-1 d-flex flex-column justify-content-center">-->
+<!--                            <div class="h-100 cover-wrapper">-->
+<!--                                <img src="/theme_auto-commerce_food/static/src/img/bg/stock_product_1.jpg" class="card-img-top h-100 cover" alt="..."/>-->
+<!--                            </div>-->
+<!--                            <div class="card-body flex-none w-100 border-top mb-0 align-self-end">-->
+<!--                                <p class="card-text mb-2">-->
+<!--                                    <a>Product Item 1</a>-->
+<!--                                </p>-->
+<!--                                <div class="d-flex justify-content-between">-->
+<!--                                    <h5 class="card-title mb-3">$20.94</h5>-->
+<!--                                    <span class="card-text">-->
+<!--                                        3.5<i class="bi bi-star-fill ms-1 text-info align-items-center"></i>-->
+<!--                                    </span>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+
+                </div>
+
+                <div class="d-flex justify-content-center">
+                    <a href="/shop" type="button" class="btn btn-outline-primary">See more</a>
+                </div>
+
+            </div>
+        </section>
+    </template>
+
+    <template id="product_highlight_section" name="Product Highlight">
+        <!-- highlight -->
+        <section id="highlight" class="banner-bg highlight-section position-relative bg-white pt-2 pb-5" style="background-image: url('/theme_auto-commerce_food/static/src/img/bg/highlight_img.jpg');">
+
+            <div class="d-flex align-items-center bring-to-front position-relative pt-lg-5 highlight-header flex-column">
+                <div class="container position-relative d-flex flex-column">
+                    <h3 class="text-center">
+                        Your highlight title here
+                    </h3>
+                </div>
+            </div>
+
+<!--            <img class="banner-bg mt-lg-5" src="/theme_auto-commerce_food/static/src/img/bg/highlight_img.jpg"/>-->
+
+            <div class="d-flex align-items-center justify-content-center highlight-info position-relative pb-lg-5">
+                <div class="container position-relative row">
+
+                    <div class="col-lg-5 col-xl-4 col-xxl-3 left-section">
+                        <div class="row">
+                            <div class="col-xl-12 mb-xl-5 mb-2">
+                                <h5 class="info-header">Feature 1</h5>
+                                <p class="info-text">
+                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lacus, fermentum amet faucibus sed id nisi lectus at.
+                                </p>
+                            </div>
+
+                            <div class="col-xl-12 mb-xl-5 mb-2">
+                                <h5 class="info-header">Feature 2</h5>
+                                <p class="info-text">
+                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lacus, fermentum amet faucibus sed id nisi lectus at.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-2 col-xl-4 col-xxl-6 d-none d-lg-block"></div>
+
+                    <div class="col-lg-5 col-xl-4 col-xxl-3 right-section">
+                        <div class="row">
+                            <div class="col-xl-12 mb-xl-5 mb-2">
+                                <h5 class="info-header">Feature 3</h5>
+                                <p class="info-text">
+                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lacus, fermentum amet faucibus sed id nisi lectus at.
+                                </p>
+                            </div>
+
+                            <div class="col-xl-12 mb-xl-5 mb-2">
+                                <h5 class="info-header">Feature 4</h5>
+                                <p class="info-text">
+                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lacus, fermentum amet faucibus sed id nisi lectus at.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+    </template>
+
+<!--    <template id="s_testimonial_opt" name="Snippet Testimonial Options" inherit_id="website.snippet_options">-->
+<!--        <xpath expr="//div[@data-js='background']" position="after">-->
+<!--            <div data-selector=".s_testimonial"> &lt;!&ndash; Options group &ndash;&gt;-->
+<!--                <div class="dropdown-submenu">-->
+<!--                    <a href="#" class="dropdown-item">Your Option</a>-->
+<!--                    <div class="dropdown-menu">&lt;!&ndash; Options list &ndash;&gt;-->
+<!--                        <a href="#" class="dropdown-item" data-select-class="opt_shadow">Shadow Images</a>-->
+<!--                        <a href="#" class="dropdown-item" data-select-class="opt_grey_bg">Grey Bg</a>-->
+<!--                        <a href="#" class="dropdown-item" data-select-class="">None</a>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </xpath>-->
+<!--    </template>-->
+
+    <template id="category_banner_section" name="Category Banner Section">
+        <section id="categoryBanner" class="align-items-center bg-white py-4">
+            <div class="container position-relative d-flex flex-column py-lg-1">
+                <div class="row js-banner-container">
+
+                </div>
+
+                <div class="spinner js-category-spinner">
+                  <div class="bounce1"></div>
+                  <div class="bounce2"></div>
+                  <div class="bounce3"></div>
+                </div>
+
+            </div>
+
+
+        </section>
+
+    </template>
+
+
+
+
+</odoo>
