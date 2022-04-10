@@ -258,9 +258,30 @@
 <!--        </xpath>-->
 <!--    </template>-->
 
+<!--    <template id="category_banner_section" name="Category Banner Section">-->
+<!--        <section id="categoryBanner" class="align-items-center bg-white py-4">-->
+<!--            <div class="container position-relative d-flex flex-column py-lg-1">-->
+<!--                <div class="row js-banner-container">-->
+
+<!--                </div>-->
+
+<!--                <div class="spinner js-category-spinner">-->
+<!--                  <div class="bounce1"></div>-->
+<!--                  <div class="bounce2"></div>-->
+<!--                  <div class="bounce3"></div>-->
+<!--                </div>-->
+
+<!--            </div>-->
+<!--        </section>-->
+<!--    </template>-->
+
     <template id="category_banner_section" name="Category Banner Section">
-        <section id="categoryBanner" class="align-items-center bg-white py-4">
+        <section id="categoryBanner" class="category-banner align-items-center py-4">
             <div class="container position-relative d-flex flex-column py-lg-1">
+                <h2 class="text-center mb-4 title">
+                    Categories
+                </h2>
+
                 <div class="row js-banner-container">
 
                 </div>
@@ -272,10 +293,7 @@
                 </div>
 
             </div>
-
-
         </section>
-
     </template>
 
 

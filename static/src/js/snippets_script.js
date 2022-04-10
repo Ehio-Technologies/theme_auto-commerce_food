@@ -142,15 +142,18 @@ $(document).ready(function() {
             dataType: "json",
             success: function(data){
 
-                var allProducts = data.map(function(value, index){
+                let productsWithImage = 0;
+                let allProducts = data.map(function(value, index){
 
                     if(value.image == 'False'){
                         return '';
                     }
 
-                    if(index > 8){
+                    if(productsWithImage > 7){
                         return '';
                     }
+
+                    productsWithImage += 1;
 
                     let imageStr = value.image.substring(2, value.image.length - 1);
 
@@ -195,6 +198,7 @@ $(document).ready(function() {
 
     }
 
+
     function addCategoriesBanner(){
         var baseUrl = '/auto-commerce/categories';
 
@@ -214,33 +218,30 @@ $(document).ready(function() {
                     let categoryImg = '';
 
                     if(value.image == 'False'){
-                        categoryImg = `<img class="cover w-100" src="/theme_auto-commerce_default/static/src/img/bg/banner-bg.jpg"/>`;
+                        categoryImg = `<img class="category-img cover w-100" src="/theme_auto-commerce_default/static/src/img/bg/banner-bg.jpg"/>`;
                     }
                     else{
                         let imageStr = value.image.substring(2, value.image.length - 1);
-                        categoryImg = `<img class="cover w-100" src="data:image/png;base64,${imageStr}"/>`;
+                        categoryImg = `<img class="category-img cover w-100" src="data:image/png;base64,${imageStr}"/>`;
                     }
 
-                    return`<div class="banner-item-container">
-                                <div class="banner-item position-relative ">
-                                    <div class="banner-item-img w-100 cover">
-                                        ${categoryImg}
-                                    </div>
-            
-                                    <div class="banner-text position-absolute">
-                                        <span>
-                                            ${value.category}
-                                    </div>
-            
-                                    <div class="banner-content-wrapper position-bottom-right position-x-left-to-right position-y-top-to-bottom style-1">
-                                        <div class="banner-content-inner">
-                                            <div>
-                                                <a href="/shop/category/${value.id}" class="btn btn-light">Shop category</a>
-                                            </div>
-                                        </div>
-                                    </div>
+                    return`
+                            <div class="col-12 col-md-4">
+                            <div class="category-item mt-2">
+                                <div class="cover w-100">
+                                    ${categoryImg}
                                 </div>
-                            </div>`;
+                                <div class="bottom-section d-flex align-items-center justify-content-between">
+                                    <span class="category-title">
+                                        ${value.category}
+                                    </span>
+        
+                                    <a href="/shop/category/${value.id}">
+                                        Shop
+                                    </a>
+                                </div>
+                            </div>
+                           </div>`;
 
                 }).join('');
 
@@ -265,6 +266,7 @@ $(document).ready(function() {
         });
 
     }
+
 
 
     function getContactInfo(){
