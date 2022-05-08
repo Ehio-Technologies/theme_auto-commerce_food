@@ -10,8 +10,6 @@
             <div class="oe_structure" />
             <t t-call="theme_auto-commerce_food.popular_products_section"></t>
             <div class="oe_structure" />
-            <t t-call="theme_auto-commerce_food.product_highlight_section"></t>
-            <div class="oe_structure" />
         </xpath>
     </template>
 </odoo>

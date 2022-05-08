@@ -1,27 +1,95 @@
-$theme_color: #0052CC  !default
-
-$o-color-palettes: (
+$o-color-palettes: map-merge($o-color-palettes,
     (
+        'ehiostore-1': (
             'o-color-1': #204902,
             'o-color-2': #204902,
-            //'o-color-2': #6CABC4,
             'o-color-3': #4CAC05,
             'o-color-4': #FFFFFF,
             'o-color-5': #204902,
-            //'o-color-5': #1A201F,
-        )
-    ,(
-        'o-color-1': #50106E,
-        'o-color-2': #C355F6,
-        'o-color-3': #F8F8FF,
-        'o-color-4': #FFFFFF,
-        'o-color-5': #50106E,
-    ),
+        ),
+        'ehiostore-2':(
+            'o-color-1': #50106E,
+            'o-color-2': #C355F6,
+            'o-color-3': #F8F8FF,
+            'o-color-4': #FFFFFF,
+            'o-color-5': #50106E,
+        ),
+        'ehiostore-3': (
+            'o-color-1': #54787D,
+            'o-color-2': #6B9997,
+            'o-color-3': #615145,
+            'o-color-4': #C6CCA5,
+            'o-color-5': #412342,
+        ),
+        'ehiostore-4': (
+            'o-color-1': #0052CC,
+            'o-color-2': #0052CC,
+            'o-color-3': #445E87,
+            'o-color-4': #FFFFFF,
+            'o-color-5': #1A201F,
+        ),
+        'ehiostore-5':(
+            'o-color-1': #50106E,
+            'o-color-2': #C355F6,
+            'o-color-3': #F8F8FF,
+            'o-color-4': #FFFFFF,
+            'o-color-5': #50106E,
+        ),
+        'ehiostore-6': (
+            'o-color-1': #54787D,
+            'o-color-2': #6B9997,
+            'o-color-3': #615145,
+            'o-color-4': #C6CCA5,
+            'o-color-5': #412342,
+        ),
+    )
+);
+
+
+
+$o-theme-font-configs: (
+  'Inter': (
+        'family': ('Inter', sans-serif),
+        'url': 'Inter:100,200,300,400,500,600,700,800,900',
+  ),
+);
+
+
+//------------------------------------------------------------------------------
+// Website customizations
+//------------------------------------------------------------------------------
+$o-website-values-palettes: (
     (
-        'o-color-1': #54787D,
-        'o-color-2': #6B9997,
-        'o-color-3': #615145,
-        'o-color-4': #C6CCA5,
-        'o-color-5': #412342,
+        'color-palettes-name': 'ehiostore-1',
+        'font': 'Inter',
+        'footer-template': 'minimalist',
     ),
+);
+
+$o-selected-color-palettes-names: append($o-selected-color-palettes-names, 'ehiostore-1');
+
+$o-color-palettes-compatibility-indexes: (
+    1: 'ehiostore-1',
+    2: 'monglia-2',
+    3: 'monglia-3',
+    4: 'monglia-4',
+    5: 'monglia-5',
+    6: 'monglia-6',
+    7: 'generic-1',
+    8: 'generic-2',
+    9: 'generic-3',
+    10: 'generic-4',
+    11: 'generic-5',
+    12: 'generic-6',
+    13: 'generic-7',
+    14: 'generic-8',
+    15: 'generic-9',
+    16: 'generic-10',
+    17: 'generic-11',
+    18: 'generic-12',
+    19: 'generic-13',
+    20: 'generic-14',
+    21: 'generic-15',
+    22: 'generic-16',
+    23: 'generic-17',
 );
